@@ -60,13 +60,14 @@ class Detect:
                 cv.destroyAllWindows()
                 self.enabled = False
                 sys.exit(0)
-
-            frame = await reducer(frame, percentage=30)
-            encodedImage = cv.imencode(".jpg", frame)[1].tobytes()
-            yield (b"--frame\r\nContent-Type:video/jpeg2000\r\n\r\n" + encodedImage + b"\r\n")
-            await asyncio.sleep(0.00001)
+                
+                # раскоментить для трансляции
+            # frame = await reducer(frame, percentage=30)
+            # encodedImage = cv.imencode(".jpg", frame)[1].tobytes()
+            # yield (b"--frame\r\nContent-Type:video/jpeg2000\r\n\r\n" + encodedImage + b"\r\n")
+            # await asyncio.sleep(0.00001)
         # close stream
-        stream.release()
+        # stream.release()
 
     def detect_data(self):
         while self.started:

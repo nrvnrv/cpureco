@@ -6,13 +6,13 @@ import uvicorn, asyncio, cv2
 from vidgear.gears.asyncio import WebGear
 from vidgear.gears.asyncio.helper import reducer
 
-web = WebGear(logging=True)#
+# web = WebGear(logging=True)#
 
 start_time = time.time()
 detect = Detect(256).start()
 
-web.config["generator"] = detect.my_frame_producer#
-uvicorn.run(web(), host="localhost", port=8000)#
+# web.config["generator"] = detect.my_frame_producer#
+# uvicorn.run(web(), host="localhost", port=8000)#
 
 
 
