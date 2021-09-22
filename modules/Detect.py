@@ -20,12 +20,13 @@ class Detect:
         self.thread = Thread(target=self.my_frame_producer, daemon=True, args=())
         self.started = False
         self.enabled = False
-        with open('all/obj.names', 'rt') as f:
+        with open('coco/coco.names', 'rt') as f:
             self.class_names = f.read().rstrip('\n').split('\n')
             
         self.vs = WebcamVideoStream(0).start()
         frame = self.vs.read()
-        self.net = cv.dnn_DetectionModel('all/yolo-tiny.h5')
+        self.net = cv.dnn_DetectionModel('coco/yolov4.cfg',
+                                         'coco/yolov4.weights')
         self.net.setInputSize(net_size, net_size)  # 416, 416 for better accuracy, set in run.py
         self.net.setInputScale(1.0 / 127)  # 1.0 / 256 for better accuracy
         self.net.setInputSwapRB(True)
