@@ -10,9 +10,14 @@ from threading import Thread
 import os.path
 
 
-import uvicorn, asyncio, cv2
-from vidgear.gears.asyncio import WebGear
-from vidgear.gears.asyncio.helper import reducer
+# import uvicorn, asyncio, cv2
+# from vidgear.gears.asyncio import WebGear
+# from vidgear.gears.asyncio.helper import reducer
+
+
+objnames = 'coco/coco.names'
+cfgfile = 'coco/yolov4.cfg'
+weightfile = 'coco/yolov4.weights'
 
 
 class Detect:
@@ -20,13 +25,12 @@ class Detect:
         self.thread = Thread(target=self.my_frame_producer, daemon=True, args=())
         self.started = False
         self.enabled = False
-        with open('coco/coco.names', 'rt') as f:
+        with open(objnames, 'rt') as f:
             self.class_names = f.read().rstrip('\n').split('\n')
             
         self.vs = WebcamVideoStream(0).start()
         frame = self.vs.read()
-        self.net = cv.dnn_DetectionModel('coco/yolov4.cfg',
-                                         'coco/yolov4.weights')
+        self.net = cv.dnn_DetectionModel(cfgfile,weightfile)
         self.net.setInputSize(net_size, net_size)  # 416, 416 for better accuracy, set in run.py
         self.net.setInputScale(1.0 / 127)  # 1.0 / 256 for better accuracy
         self.net.setInputSwapRB(True)

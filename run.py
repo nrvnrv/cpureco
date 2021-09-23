@@ -2,9 +2,9 @@ import time
 from modules.Detect import Detect
 
 # added
-import uvicorn, asyncio, cv2
-from vidgear.gears.asyncio import WebGear
-from vidgear.gears.asyncio.helper import reducer
+# import uvicorn, asyncio, cv2
+# from vidgear.gears.asyncio import WebGear
+# from vidgear.gears.asyncio.helper import reducer
 
 # web = WebGear(logging=True)#
 
@@ -20,6 +20,6 @@ detect = Detect(256).start()
 print('Init finished')
 print("--- took %s seconds ---" % (time.time() - start_time))
 print()
-web.shutdown()#
+# web.shutdown()
 detect.enable()
 time.sleep(1000)
