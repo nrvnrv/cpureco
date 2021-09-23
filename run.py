@@ -2,17 +2,17 @@ import time
 from modules.Detect import Detect
 
 # added
-# import uvicorn, asyncio, cv2
-# from vidgear.gears.asyncio import WebGear
-# from vidgear.gears.asyncio.helper import reducer
+import uvicorn, asyncio, cv2
+from vidgear.gears.asyncio import WebGear
+from vidgear.gears.asyncio.helper import reducer
 
-# web = WebGear(logging=True)#
+web = WebGear(logging=True)#
 
 start_time = time.time()
 detect = Detect(256).start()
 
-# web.config["generator"] = detect.my_frame_producer#
-# uvicorn.run(web(), host="localhost", port=8000)#
+web.config["generator"] = detect.my_frame_producer#
+uvicorn.run(web(), host="localhost", port=8000)#
 
 
 
@@ -20,6 +20,6 @@ detect = Detect(256).start()
 print('Init finished')
 print("--- took %s seconds ---" % (time.time() - start_time))
 print()
-# web.shutdown()
+web.shutdown()#
 detect.enable()
 time.sleep(1000)

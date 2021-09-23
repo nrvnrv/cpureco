@@ -10,15 +10,13 @@ from threading import Thread
 import os.path
 
 
-# import uvicorn, asyncio, cv2
-# from vidgear.gears.asyncio import WebGear
-# from vidgear.gears.asyncio.helper import reducer
+import uvicorn, asyncio, cv2
+from vidgear.gears.asyncio import WebGear
+from vidgear.gears.asyncio.helper import reducer
 
-
-objnames = 'coco/coco.names'
-cfgfile = 'coco/yolov4.cfg'
-weightfile = 'coco/yolov4.weights'
-
+objnames = 'coco/obj.names'
+cfgfile = 'coco/yolov4-tiny.cfg'
+weightfile = 'coco/yolov4-tiny.weights'
 
 class Detect:
     def __init__(self, net_size=0):
@@ -64,14 +62,13 @@ class Detect:
                 cv.destroyAllWindows()
                 self.enabled = False
                 sys.exit(0)
-                
-                # раскоментить для трансляции
-            # frame = await reducer(frame, percentage=30)
-            # encodedImage = cv.imencode(".jpg", frame)[1].tobytes()
-            # yield (b"--frame\r\nContent-Type:video/jpeg2000\r\n\r\n" + encodedImage + b"\r\n")
-            # await asyncio.sleep(0.00001)
+
+            frame = await reducer(frame, percentage=30)
+            encodedImage = cv.imencode(".jpg", frame)[1].tobytes()
+            yield (b"--frame\r\nContent-Type:video/jpeg2000\r\n\r\n" + encodedImage + b"\r\n")
+            await asyncio.sleep(0.00001)
         # close stream
-        # stream.release()
+        stream.release()
 
     def detect_data(self):
         while self.started:
